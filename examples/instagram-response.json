@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "source": "mock-metricool",
+  "platform": "Instagram",
+  "reportingPeriod": {
+    "start": "2026-08-01",
+    "end": "2026-08-23"
+  },
+  "views": 18600,
+  "reach": 11400,
+  "impressions": 21500,
+  "engagement": 1260,
+  "engagementRate": 11.05,
+  "followers": 3420,
+  "followerGrowth": 126,
+  "followerGrowthRate": 3.68,
+  "profileVisits": 640,
+  "linkClicks": 184,
+  "clickThroughRate": 0.86,
+  "postsPublished": 12,
+  "generatedAt": "2026-08-25T01:49:54.416Z"
+}
