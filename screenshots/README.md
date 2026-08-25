@@ -2,7 +2,7 @@
 
 This folder contains screenshots captured while testing the published n8n workflow.
 
-Planned evidence:
+Completed test evidence:
 
 - Published n8n workflow canvas
 - Successful Instagram JSON response
