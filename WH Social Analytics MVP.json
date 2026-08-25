@@ -1,0 +1,112 @@
+{
+  "name": "WH Social Analytics MVP",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "metricool-analytics",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fd4d40fc-7f2d-4cae-94be-b7f3c0f7b25c",
+      "name": "Webhook",
+      "webhookId": "fa87385d-3cdc-4abd-9e54-ba960314c6d0"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\n\nconst requestedPlatform = String(\n  input.query?.platform || \"instagram\"\n).trim().toLowerCase();\n\nconst metricoolData = {\n  instagram: {\n    platform: \"Instagram\",\n    reportingPeriod: {\n      start: \"2026-08-01\",\n      end: \"2026-08-23\"\n    },\n    views: 18600,\n    reach: 11400,\n    impressions: 21500,\n    engagement: 1260,\n    followers: 3420,\n    followerGrowth: 126,\n    profileVisits: 640,\n    linkClicks: 184,\n    postsPublished: 12\n  },\n  facebook: {\n    platform: \"Facebook\",\n    reportingPeriod: {\n      start: \"2026-08-01\",\n      end: \"2026-08-23\"\n    },\n    views: 14300,\n    reach: 9200,\n    impressions: 17800,\n    engagement: 776,\n    followers: 4810,\n    followerGrowth: 88,\n    profileVisits: 520,\n    linkClicks: 137,\n    postsPublished: 10\n  }\n};\n\nreturn [\n  {\n    json: {\n      requestedPlatform,\n      source: \"mock-metricool\",\n      datasets: metricoolData\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "b89bd5e4-8ce3-4642-b579-1cd9143935a0",
+      "name": "Load Dummy Metricool Data"
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json;\n\nconst requestedPlatform = input.requestedPlatform;\nconst source = input.source;\nconst datasets = input.datasets;\nconst supportedPlatforms = Object.keys(datasets);\n\nif (!supportedPlatforms.includes(requestedPlatform)) {\n  return [\n    {\n      json: {\n        httpStatus: 400,\n        body: {\n          success: false,\n          source,\n          error: \"Unsupported platform\",\n          requestedPlatform,\n          supportedPlatforms\n        }\n      }\n    }\n  ];\n}\n\nconst analytics = datasets[requestedPlatform];\n\nconst engagementRate = analytics.reach > 0\n  ? Number(((analytics.engagement / analytics.reach) * 100).toFixed(2))\n  : 0;\n\nconst followerGrowthRate = analytics.followers > 0\n  ? Number(((analytics.followerGrowth / analytics.followers) * 100).toFixed(2))\n  : 0;\n\nconst clickThroughRate = analytics.impressions > 0\n  ? Number(((analytics.linkClicks / analytics.impressions) * 100).toFixed(2))\n  : 0;\n\nreturn [\n  {\n    json: {\n      httpStatus: 200,\n      body: {\n        success: true,\n        source,\n        platform: analytics.platform,\n        reportingPeriod: analytics.reportingPeriod,\n        views: analytics.views,\n        reach: analytics.reach,\n        impressions: analytics.impressions,\n        engagement: analytics.engagement,\n        engagementRate,\n        followers: analytics.followers,\n        followerGrowth: analytics.followerGrowth,\n        followerGrowthRate,\n        profileVisits: analytics.profileVisits,\n        linkClicks: analytics.linkClicks,\n        clickThroughRate,\n        postsPublished: analytics.postsPublished,\n        generatedAt: new Date().toISOString()\n      }\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "220610db-ae50-49f0-bac9-cc2e7937a735",
+      "name": "Process & Standardise Analytics"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.body }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        672,
+        0
+      ],
+      "id": "6ed868ac-9645-4a0a-8d49-8bc6ec1d6bd1",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Load Dummy Metricool Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Dummy Metricool Data": {
+      "main": [
+        [
+          {
+            "node": "Process & Standardise Analytics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process & Standardise Analytics": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6c746957-4d81-4332-81ae-07ce0c4d6bc9",
+  "meta": {
+    "instanceId": "297acbf5a34dd034dfe6a5001aee153e94ad320da06eb46f267f5dfe35cd0d27"
+  },
+  "nodeGroups": [],
+  "id": "CIh0W0rDVgWu34qt",
+  "tags": []
+}
