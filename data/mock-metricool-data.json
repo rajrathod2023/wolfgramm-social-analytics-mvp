@@ -1,0 +1,35 @@
+{
+  "source": "mock-metricool",
+  "dataType": "demonstration",
+  "reportingPeriod": {
+    "start": "2026-08-01",
+    "end": "2026-08-23"
+  },
+  "platforms": {
+    "instagram": {
+      "platform": "Instagram",
+      "views": 18600,
+      "reach": 11400,
+      "impressions": 21500,
+      "engagement": 1260,
+      "followers": 3420,
+      "followerGrowth": 126,
+      "profileVisits": 640,
+      "linkClicks": 184,
+      "postsPublished": 12
+    },
+    "facebook": {
+      "platform": "Facebook",
+      "views": 14300,
+      "reach": 9200,
+      "impressions": 17800,
+      "engagement": 776,
+      "followers": 4810,
+      "followerGrowth": 88,
+      "profileVisits": 520,
+      "linkClicks": 137,
+      "postsPublished": 10
+    }
+  },
+  "disclaimer": "Mock data created for workflow development and testing. It is not live Metricool or Wolfgramm performance data."
+}
