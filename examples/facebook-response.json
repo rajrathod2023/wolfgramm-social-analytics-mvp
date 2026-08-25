@@ -1,0 +1,22 @@
+{
+  "success": true,
+  "source": "mock-metricool",
+  "platform": "Facebook",
+  "reportingPeriod": {
+    "start": "2026-08-01",
+    "end": "2026-08-23"
+  },
+  "views": 14300,
+  "reach": 9200,
+  "impressions": 17800,
+  "engagement": 776,
+  "engagementRate": 8.43,
+  "followers": 4810,
+  "followerGrowth": 88,
+  "followerGrowthRate": 1.83,
+  "profileVisits": 520,
+  "linkClicks": 137,
+  "clickThroughRate": 0.77,
+  "postsPublished": 10,
+  "generatedAt": "2026-08-25T01:51:31.340Z"
+}
