@@ -1,0 +1,10 @@
+{
+  "success": false,
+  "source": "mock-metricool",
+  "error": "Unsupported platform",
+  "requestedPlatform": "tiktok",
+  "supportedPlatforms": [
+    "instagram",
+    "facebook"
+  ]
+}
